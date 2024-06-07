@@ -1,20 +1,12 @@
 package io.spring.batch.helloworld;
 
 
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 /**
- * @EnableBatchProcessing
- * 배치 인프라스트럭처를 부트스트랩하는 데 사용된다.
+ * @EnableBatchProcessing 배치 인프라스트럭처를 부트스트랩하는 데 사용된다.
  * 배치 인프라스트럭처를 위한 대부분의 스프링 빈 정의를 제공하므로 다음과 같은 컴포넌트를 직접 포함시킬 필요가 없다.
  * - JobRepository: 실행 중인 잡의 상태를 기록하는 데 사용됨
  * - JobLauncher: 잡을 구동하는 데 사용됨
@@ -28,43 +20,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class HelloWorldApplication {
 
-    @Autowired // JobBuilder 인스턴스 생성
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired // StepBuilder 인스턴스 생성
-    private StepBuilderFactory stepBuilderFactory;
-
     public static void main(String[] args) {
         SpringApplication.run(HelloWorldApplication.class, args);
-    }
-
-    /**
-     *
-     * - this.stepBuilderFactory.get("step1"): stepBuilderFactory를 사용해 스텝 구성 및 StepBuilder 반환
-     *   -  StepBuilder: 해당 빌더를 사용해 스텝을 정의할 수 있다.
-     * - tasklet: 테스크릿을 사용해 스텝을 구성
-     * - build(): 스텝 구성 완료
-     */
-    @Bean
-    public Step step1() {
-        return this.stepBuilderFactory.get("step2")
-                .tasklet((contribution, chunkContext) -> {
-                    System.out.println("Hello, World!");
-                    return RepeatStatus.FINISHED;
-                }).build();
-    }
-
-    /**
-     * 스프링 배치 잡을 반환한다.
-     * - this.jobBuilderFactory.get("basicJob"): 잡 이름을 전달해 JobBuilder 얻기
-     * - start(step1()): 시작할 스텝을 지정
-     * - build(): 실제 잡을 생성
-     */
-    @Bean
-    public Job job() {
-        return this.jobBuilderFactory.get("basicJob")
-                .start(step1())
-                .build();
     }
 
 }
