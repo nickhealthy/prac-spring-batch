@@ -10,7 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JobRunner implements ApplicationRunner {
+public class JobInstanceRunnerTest implements ApplicationRunner {
 
     @Autowired
     private JobLauncher jobLauncher;
