@@ -1,4 +1,4 @@
-package io.spring.batch.helloworld.jobParameter;
+package io.spring.batch.helloworld.ch3.jobParameter;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package io.spring.batch.helloworld.jobInstance;
+package io.spring.batch.helloworld.ch3.jobInstance;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
