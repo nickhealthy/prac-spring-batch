@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 * 그 설정을 우리가 일부분 커스터마이징할 수 있는 실습
 *  - BatchConfigure 인터페이스 또는 그 인터페이스를 구현한 구현체를 상속 받아 구현
 * */
-@Configuration
+//@Configuration
 public class CustomBatchConfigurer extends BasicBatchConfigurer {
 
     private final DataSource dataSource;
