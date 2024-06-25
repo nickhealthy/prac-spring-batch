@@ -1,4 +1,4 @@
-package io.spring.batch.helloworld.ch3;
+package io.spring.batch.helloworld.ch3.step;
 
 
 import org.springframework.batch.core.StepContribution;
