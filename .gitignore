@@ -34,3 +34,6 @@ build/
 
 ### ignore files ###
 /src/main/resources/application.yml
+src/main/java/Main.java
+src/main/java/readme.md
+src/test/java/io/spring/batch/helloworld/ch3/
