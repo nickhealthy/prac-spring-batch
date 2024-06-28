@@ -11,6 +11,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * 테스트를 위한 클래스, 자동으로 실행하면 아래와 같은 테스트를 실행하는데 어려움이 있어 수동으로 실행하게 된다.
+ * [테스트 내용]
+ * - 애플리케이션 실행 시 파라미터를 주입하는 방법
+ * - 코드로 직접 JobParameter를 주입하는 방법
+ */
 //@Component
 public class JobParameterRunnerTest implements ApplicationRunner {
 
