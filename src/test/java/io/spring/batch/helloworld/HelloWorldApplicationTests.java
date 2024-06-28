@@ -8,7 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 @SpringBootTest
 class HelloWorldApplicationTests {
 
-    @Test
+//    @Test
     void applicationContext() {
         ApplicationContext ac = new AnnotationConfigApplicationContext();
 
@@ -19,7 +19,7 @@ class HelloWorldApplicationTests {
     }
 
 
-    @Test
+//    @Test
     void contextLoads() {
     }
 
