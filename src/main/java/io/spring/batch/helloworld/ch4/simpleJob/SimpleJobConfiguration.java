@@ -1,9 +1,7 @@
-package io.spring.batch.helloworld.ch4.jobConfiguration;
+package io.spring.batch.helloworld.ch4.simpleJob;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -13,19 +11,32 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class JobConfiguration1 {
+public class SimpleJobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job batchJob1() {
-        return jobBuilderFactory.get("JobConfiguration1")
+    public Job batchJob() {
+        return jobBuilderFactory.get("SimpleJobConfiguration")
                 .incrementer(new RunIdIncrementer())
                 .start(step1())
+                .listener(new JobExecutionListener() {
+                    @Override
+                    public void beforeJob(JobExecution jobExecution) {
+
+                    }
+
+                    @Override
+                    public void afterJob(JobExecution jobExecution) {
+
+                    }
+                })
+                .preventRestart()
                 .next(step2())
+                .next(step3())
                 .build();
     }
 
@@ -35,7 +46,7 @@ public class JobConfiguration1 {
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("STEP1 HAS EXECUTED!123");
+                        System.out.println("STEP1 HAS EXECUTED!");
                         return RepeatStatus.FINISHED;
                     }
                 }).build();
@@ -48,6 +59,20 @@ public class JobConfiguration1 {
                     @Override
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                         System.out.println("STEP2 HAS EXECUTED!");
+                        return RepeatStatus.FINISHED;
+                    }
+                }).build();
+    }
+
+    @Bean
+    public Step step3() {
+        return stepBuilderFactory.get("step3")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        chunkContext.getStepContext().getStepExecution().setStatus(BatchStatus.FAILED); // 배치 상태 코드 FAILED
+                        contribution.setExitStatus(ExitStatus.STOPPED);                                 // 배치 종료 코드 STOPPED
+                        System.out.println("STEP3 HAS EXECUTED!");
                         return RepeatStatus.FINISHED;
                     }
                 }).build();
