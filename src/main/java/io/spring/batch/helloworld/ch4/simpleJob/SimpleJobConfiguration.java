@@ -34,6 +34,12 @@ public class SimpleJobConfiguration {
 
                     }
                 })
+                .validator(new JobParametersValidator() {
+                    @Override
+                    public void validate(JobParameters parameters) throws JobParametersInvalidException {
+
+                    }
+                })
                 .preventRestart()
                 .next(step2())
                 .next(step3())
