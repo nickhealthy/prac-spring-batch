@@ -1,4 +1,4 @@
-package io.spring.batch.helloworld.ch4.validator;
+package io.spring.batch.helloworld.ch4.preventRestart;
 
 
 import lombok.RequiredArgsConstructor;
@@ -11,21 +11,19 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Configuration
 @RequiredArgsConstructor
-//@Configuration
-public class ValidatorConfiguration {
+public class PreventRestartConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
     public Job batchJob() {
-        return jobBuilderFactory.get("ValidatorConfiguration")
+        return jobBuilderFactory.get("PreventRestartConfiguration")
                 .start(step1())
                 .next(step2())
-                .next(step3())
-//                .validator(new CustomJobParametersValidator())
-                .validator(new DefaultJobParametersValidator(new String[]{"name", "date"}, new String[]{"count"}))
+                .preventRestart()
                 .build();
     }
 
@@ -43,16 +41,9 @@ public class ValidatorConfiguration {
         return stepBuilderFactory.get("step2")
                 .tasklet((contribution, chunkContext) -> {
                     System.out.println("STEP2 HAS EXECUTED!");
-                    return RepeatStatus.FINISHED;
+                    throw new RuntimeException("step2 was failed");
+//                    return RepeatStatus.FINISHED;
                 }).build();
     }
 
-    @Bean
-    public Step step3() {
-        return stepBuilderFactory.get("step3")
-                .tasklet((contribution, chunkContext) -> {
-                    System.out.println("STEP3 HAS EXECUTED!");
-                    return RepeatStatus.FINISHED;
-                }).build();
-    }
 }
