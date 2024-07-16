@@ -5,6 +5,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,8 @@ public class IncrementerConfiguration {
         return jobBuilderFactory.get("IncrementerConfiguration")
                 .start(step1())
                 .next(step2())
-                .incrementer(new CustomJobParametersIncrementer())
+//                .incrementer(new CustomJobParametersIncrementer())    // 커스터마이징 JobParametersIncrementer
+                .incrementer(new RunIdIncrementer())                    // 스프링 배치에서 기본으로 제공해주는 JobParametersIncrementer
                 .build();
     }
 
