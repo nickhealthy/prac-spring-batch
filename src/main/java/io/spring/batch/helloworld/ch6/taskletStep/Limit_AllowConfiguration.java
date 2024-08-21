@@ -30,7 +30,9 @@ public class Limit_AllowConfiguration {
                 .tasklet((stepContribution, chunkContext) -> {
                     System.out.println("step1 EXECUTE!!");
                     return RepeatStatus.FINISHED;
-                }).build();
+                })
+                .allowStartIfComplete(true)
+                .build();
     }
 
     @Bean
