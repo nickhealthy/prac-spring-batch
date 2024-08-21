@@ -9,6 +9,11 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * STEP - tasklet 설정
+ * startLimit: 정해진 횟수만큼만 STEP을 실행(STEP 마다 개별적으로 설정 가능)
+ * allowStartIfComplete: 이미 성공한 STEP이라도 재실행이 가능하도록 설정
+ */
 @Configuration
 @RequiredArgsConstructor
 public class Limit_AllowConfiguration {
